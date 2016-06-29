@@ -1,6 +1,12 @@
-frontend-nanodegree-arcade-game
-===============================
+# Arcade Game
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission.
+A simple 'Frogger' style arcade game.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## Installation
+
+Clone the GitHub repository
+
+`$ git clone https://github.com/codemansam/arcade-game`
+
+### Playing the Game
+Try to avoid the bugs and make it to the water. If the player hits a bug the game resets.  If the player makes it successfully past the bugs the game will reset.
