@@ -2,7 +2,7 @@
 var laneThree = 224;
 var laneTwo = 141;
 var laneOne = 58;
-var TILE_WIDTH = 101,
+var TILE_WIDTH = 101;
 var TILE_HEIGHT = 83;
 
 /** Stores the possible lanes enemies may be present on. */
