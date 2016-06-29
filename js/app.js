@@ -1,31 +1,35 @@
-// Simplified y coordinates for assigning position of enemies
+/** Simplified y coordinates for assigning position of enemies. */
 var laneThree = 224;
 var laneTwo = 141;
 var laneOne = 58;
 var TILE_WIDTH = 101,
 var TILE_HEIGHT = 83;
 
-// Stores the lanes
+/** Stores the possible lanes enemies may be present on. */
 var lanes =[laneOne, laneTwo, laneThree];
 
+/** Stores the different enemy speeds. */
 var speeds = [200, 225, 285, 350, 450];
 
-// Sets image and starting position of Player
+/**
+ * Creates a player and sets the image and starting position.
+ * @constructor
+ */
 var Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 202;
     this.y = 390;
 
-// Sets player to starting position. Use when collision or win
+/**Sets player to starting position. Use when collision or win. */
     this.resetPlayer = function() {
         this.x = 202;
         this.y = 390;
     };
-// Gets x coordinate of player.  Used for collision detection
+/** Gets x coordinate of player.  Used for collision detection. */
     this.getXPosition = function() {
         return this.x;
     };
-// Gets y coordinate of player.  Used for collision detection.
+/** Gets y coordinate of player.  Used for collision detection. */
      this.getYPosition = function() {
         return this.y;
     };
@@ -42,8 +46,10 @@ Player.prototype.update = function() {
     }
 };
 
-// Takes the keyboard input and changes x and y position
-// of player appropriately
+/**
+ * Takes the keyboard input and changes x and y position.
+ * @param {string} direction - the direction of input.
+*/
 Player.prototype.handleInput = function(direction) {
     console.log("handle input ");
     if (direction === 'left' && this.x > 50) {
@@ -59,38 +65,40 @@ Player.prototype.handleInput = function(direction) {
         this.y = this.y + TILE_HEIGHT;
     }
 };
-// Determines when player reaches water
+/** Determines when the player reaches water */
 Player.prototype.win = function() {
     if (this.y === -25) {
         return true;
     }
 };
-// Instantiates new Player object
+/** Instantiates new Player object */
 var player = new Player();
 
-// Enemy constructor. Sets image, starting x and y coordinates, speed, lane
+/** Creates an Enemy. Sets image, starting x and y coordinates, speed and lane.
+ * @constructor
+*/
 var Enemy = function() {
 
     this.x = 0;
     this.y = 0;
     this.sprite = 'images/enemy-bug.png';
 
-    // Sets speed randomly from 5 options in speeds array
+    /** Sets speed randomly from 5 options in speeds array. */
     this.setRandomSpeed = function() {
         this.speed = speeds[Math.floor((Math.random() * 5))];
     };
 
-    // Sets lane randomly from 3 options in lanes array
+    /** Sets lane randomly from 3 options in lanes array. */
     this.setRandomLane = function() {
         this.y = lanes[Math.floor((Math.random() * 3))];
     };
     this.setRandomSpeed();
     this.setRandomLane();
 };
-//Compares x and y positions of enemies and player to determine when a collision should register
+/** Compares x and y positions of enemies and player to determine when a collision should register. */
 Enemy.prototype.collision = function() {
-    //On  lanes one two and three it is possible for the player and enemies y position to match exactly
-    //The range for x coordinates is a result of trial and error of what looked right
+    /** On  lanes one, two and three it is possible for the player and enemies y position to match exactly
+        The range for x coordinates is a result of trial and error of what looked right */
     if (player.getYPosition() === this.y &&  (this.x > player.getXPosition() - 50 && this.x < player.getXPosition() + 60)) {
         return true;
     }
@@ -99,21 +107,23 @@ Enemy.prototype.collision = function() {
     }
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-// Checks x position is less than the edge of the canvas (606)
+/** Update the enemy's position, required method for game
+ * @param {int} dt - Normalises performance across different hardware.
+ */
+ Enemy.prototype.update = function(dt) {
+/** Checks x position is less than the edge of the canvas (606) */
     if (this.x < 606) {
         this.x = this.x + this.speed * dt;
-// Checks if a collision has occurred
+/** Checks if a collision has occurred */
         if (this.collision()) {
             player.resetPlayer();
         }
 
     }
-// If enemy reaches edge of canvas without collision sets the enemy
-// to a new random lane, random speed and to position 0 on the left
-// edge of the canvas to begin again.
+/** If enemy reaches edge of canvas without collision sets the enemy
+ *  to a new random lane, random speed and to position 0 on the left
+ *  edge of the canvas to begin again.
+ */
     else {
 
         this.setRandomLane();
@@ -125,22 +135,24 @@ Enemy.prototype.update = function(dt) {
 };
 
 
-// Draw the enemy on the screen, required method for game
+/** Draw the enemy on the screen, required method for game */
+
 Enemy.prototype.render = function() {
 
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-//  Instantiate enemies
+/**  Instantiate enemies */
 var enemy1 = new Enemy(0);
 var enemy2 = new Enemy(0);
 var enemy3 = new Enemy(0);
 
-//Create and populate array to hold the different Enemy types
+/** Create and populate array to hold the different Enemy types */
 var allEnemies = [enemy1, enemy2, enemy3];
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+/** Listens for key presses and sends the keys to your
+ * Player.handleInput() method. You don't need to modify this.
+ */
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
