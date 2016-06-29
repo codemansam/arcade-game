@@ -35,7 +35,7 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.update = function() {
-    if (player.win()) {
+    if (this.win()) {
         this.resetPlayer();
     }
 };
