@@ -3,11 +3,8 @@ var laneThree = 224;
 var laneTwo = 141;
 var laneOne = 58;
 
-var lanes = new Array();
-
-lanes.push(laneOne);
-lanes.push(laneTwo);
-lanes.push(laneThree);
+// Stores the lanes
+var lanes =[laneOne, laneTwo, laneThree];
 
 var speeds = [200, 225, 285, 350, 450];
 
@@ -21,27 +18,27 @@ var Player = function() {
     this.resetPlayer = function() {
         this.x = 202;
         this.y = 390;
-    }
+    };
 // Gets x coordinate of player.  Used for collision detection
     this.getXPosition = function() {
         return this.x;
-    }
+    };
 // Gets y coordinate of player.  Used for collision detection.
      this.getYPosition = function() {
         return this.y;
-    }
+    };
 
-}
+};
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 Player.prototype.update = function() {
     if (player.win()) {
         this.resetPlayer();
     }
-}
+};
 
 // Takes the keyboard input and changes x and y position
 // of player appropriately
@@ -59,13 +56,13 @@ Player.prototype.handleInput = function(direction) {
     if (direction === 'down' && this.y < 390) {
         this.y = this.y + 83;
     }
-}
+};
 // Determines when player reaches water
 Player.prototype.win = function() {
     if (this.y === -25) {
         return true;
     }
-}
+};
 // Instantiates new Player object
 var player = new Player();
 
@@ -79,27 +76,26 @@ var Enemy = function() {
     // Sets speed randomly from 5 options in speeds array
     this.setRandomSpeed = function() {
         this.speed = speeds[Math.floor((Math.random() * 5))];
-    }
+    };
 
     // Sets lane randomly from 3 options in lanes array
     this.setRandomLane = function() {
         this.y = lanes[Math.floor((Math.random() * 3))];
-    }
+    };
     this.setRandomSpeed();
     this.setRandomLane();
-}
+};
 //Compares x and y positions of enemies and player to determine when a collision should register
 Enemy.prototype.collision = function() {
     //On  lanes one two and three it is possible for the player and enemies y position to match exactly
     //The range for x coordinates is a result of trial and error of what looked right
-    if (player.getYPosition() === this.y
-        &&  (this.x > player.getXPosition() - 50 && this.x < player.getXPosition() + 60)) {
+    if (player.getYPosition() === this.y &&  (this.x > player.getXPosition() - 50 && this.x < player.getXPosition() + 60)) {
         return true;
     }
     else {
         return false;
     }
-}
+};
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -124,27 +120,22 @@ Enemy.prototype.update = function(dt) {
         this.x = 0;
     }
 
-}
+};
 
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
 
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 //  Instantiate enemies
 var enemy1 = new Enemy(0);
 var enemy2 = new Enemy(0);
 var enemy3 = new Enemy(0);
 
-//Create array to hold the different Enemy types
-var allEnemies = new Array();
-
-// Add the enemies to Array
-allEnemies.push(enemy1);
-allEnemies.push(enemy2);
-allEnemies.push(enemy3);
+//Create and populate array to hold the different Enemy types
+var allEnemies = [enemy1, enemy2, enemy3];
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
