@@ -2,6 +2,8 @@
 var laneThree = 224;
 var laneTwo = 141;
 var laneOne = 58;
+var TILE_WIDTH = 101,
+var TILE_HEIGHT = 83;
 
 // Stores the lanes
 var lanes =[laneOne, laneTwo, laneThree];
@@ -45,16 +47,16 @@ Player.prototype.update = function() {
 Player.prototype.handleInput = function(direction) {
     console.log("handle input ");
     if (direction === 'left' && this.x > 50) {
-        this.x = this.x - 101;
+        this.x = this.x - TILE_WIDTH;
     }
     if (direction === 'right' && this.x < 400) {
-        this.x = this.x + 101;
+        this.x = this.x + TILE_WIDTH;
     }
     if (direction === 'up' && this.y > 40) {
-        this.y = this.y - 83;
+        this.y = this.y - TILE_HEIGHT;
     }
     if (direction === 'down' && this.y < 390) {
-        this.y = this.y + 83;
+        this.y = this.y + TILE_HEIGHT;
     }
 };
 // Determines when player reaches water
